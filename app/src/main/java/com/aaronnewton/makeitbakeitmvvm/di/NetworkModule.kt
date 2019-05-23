@@ -1,6 +1,8 @@
 package com.aaronnewton.makeitbakeitmvvm.di
 
 import com.aaronnewton.makeitbakeitmvvm.AppConfig
+import com.aaronnewton.makeitbakeitmvvm.data.ApiDataRepository
+import com.aaronnewton.makeitbakeitmvvm.data.ApiRepository
 import com.google.gson.GsonBuilder
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
@@ -41,5 +43,6 @@ val networkModule = module {
             .build()
     }
 
+    single<ApiRepository> { ApiDataRepository(get()) }
 
 }
