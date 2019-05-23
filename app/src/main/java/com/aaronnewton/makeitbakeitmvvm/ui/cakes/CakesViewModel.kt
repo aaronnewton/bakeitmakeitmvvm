@@ -30,6 +30,7 @@ class CakesViewModel(
 
     private fun onFetchCakesSuccessful(cakes: List<Cake>) {
         Log.d("CakesViewModel", "onFetchCakesSuccessful: ${cakes.size} $cakes")
+        //TODO remove duplicate date
         fragmentStateSubject.onNext(CakesState.Successful(cakes))
     }
 
