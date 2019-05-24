@@ -30,13 +30,15 @@ class CakesViewModel(
 
     private fun onFetchCakesSuccessful(cakes: List<Cake>) {
         Log.d("CakesViewModel", "onFetchCakesSuccessful: ${cakes.size} $cakes")
-        //TODO remove duplicate date
-        fragmentStateSubject.onNext(CakesState.Successful(cakes))
+        fragmentStateSubject.onNext(CakesState.Successful(removeDuplicateCakes(cakes)))
     }
 
     private fun onFetchCakesFailed(e: Throwable) {
         Log.d("CakesViewModel", "onFetchCakesFailed: $e")
     }
+
+    //TODO move to repository
+    private fun removeDuplicateCakes(cakes: List<Cake>) = cakes.distinctBy { it.title }
 
     fun onStateChanged(fn: (CakesState) -> Unit): Disposable = fragmentStateSubject
         .observeOn(AndroidSchedulers.mainThread())
