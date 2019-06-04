@@ -21,7 +21,7 @@ class CakesViewModel(
     private val fragmentStateSubject = BehaviorSubject.create<CakesState>()
 
     fun fetchCakes() {
-        //TODO following clean architecture i would wrap this repo in a UseCase.
+        //TODO following clean architecture I would wrap this repo in a UseCase.
         apiRepository
             .getCakes()
             .subscribe(::onFetchCakesSuccessful, ::onFetchCakesFailed)
@@ -38,7 +38,9 @@ class CakesViewModel(
     }
 
     //TODO move to repository
-    private fun removeDuplicateCakes(cakes: List<Cake>) = cakes.distinctBy { it.title }
+    private fun removeDuplicateCakes(cakes: List<Cake>): List<Cake> =
+        cakes.distinctBy { it.title }.sortedBy { it.title }
+
 
     fun onStateChanged(fn: (CakesState) -> Unit): Disposable = fragmentStateSubject
         .observeOn(AndroidSchedulers.mainThread())
