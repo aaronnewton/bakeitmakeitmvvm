@@ -1,9 +1,8 @@
-package com.aaronnewton.makeitbakeitmvvm.ui.cakes
+package com.aaronnewton.makeitbakeitmvvm.presentation.cakes
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.aaronnewton.makeitbakeitmvvm.core.rx.subscribeWithoutError
-import com.aaronnewton.makeitbakeitmvvm.data.ApiRepository
+import com.aaronnewton.makeitbakeitmvvm.domain.repository.ApiRepository
 import com.aaronnewton.makeitbakeitmvvm.data.entities.Cake
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,8 +15,6 @@ class CakesViewModel(
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
-
-    //    private val fragmentStateSubject = RepublishSubject.create<CakesState>()
     private val fragmentStateSubject = BehaviorSubject.create<CakesState>()
 
     fun fetchCakes() {
@@ -29,18 +26,15 @@ class CakesViewModel(
     }
 
     private fun onFetchCakesSuccessful(cakes: List<Cake>) {
-        Log.d("CakesViewModel", "onFetchCakesSuccessful: ${cakes.size} $cakes")
         fragmentStateSubject.onNext(CakesState.Successful(removeDuplicateCakes(cakes)))
     }
 
     private fun onFetchCakesFailed(e: Throwable) {
-        Log.d("CakesViewModel", "onFetchCakesFailed: $e")
+        fragmentStateSubject.onNext(CakesState.Error(e.message!!))
     }
 
-    //TODO move to repository
-    private fun removeDuplicateCakes(cakes: List<Cake>): List<Cake> =
-        cakes.distinctBy { it.title }.sortedBy { it.title }
-
+    private fun removeDuplicateCakes(cakes: List<Cake>): List<Cake> = cakes
+        .distinctBy { it.title }.sortedBy { it.title }
 
     fun onStateChanged(fn: (CakesState) -> Unit): Disposable = fragmentStateSubject
         .observeOn(AndroidSchedulers.mainThread())

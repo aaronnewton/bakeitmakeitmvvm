@@ -1,4 +1,4 @@
-package com.aaronnewton.makeitbakeitmvvm.ui.cakes
+package com.aaronnewton.makeitbakeitmvvm.presentation.cakes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

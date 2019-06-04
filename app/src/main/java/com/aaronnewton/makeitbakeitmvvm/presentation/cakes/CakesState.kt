@@ -1,4 +1,4 @@
-package com.aaronnewton.makeitbakeitmvvm.ui.cakes
+package com.aaronnewton.makeitbakeitmvvm.presentation.cakes
 
 import com.aaronnewton.makeitbakeitmvvm.data.entities.Cake
 
