@@ -15,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_cakes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.recyclerview.widget.DividerItemDecoration
 
 class CakesFragment : Fragment() {
 
@@ -35,6 +36,12 @@ class CakesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         cakes_recycle_view.layoutManager = LinearLayoutManager(context)
         cakes_recycle_view.adapter = adapter
+        cakes_recycle_view.addItemDecoration(
+            DividerItemDecoration(
+                cakes_recycle_view.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     override fun onStart() {

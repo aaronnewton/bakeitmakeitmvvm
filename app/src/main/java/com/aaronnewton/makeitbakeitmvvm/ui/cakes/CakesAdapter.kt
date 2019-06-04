@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aaronnewton.makeitbakeitmvvm.R
 import com.aaronnewton.makeitbakeitmvvm.data.entities.Cake
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cake_item.view.*
 
 class CakesAdapter(
@@ -45,6 +46,12 @@ class CakesAdapter(
         fun bind(item: Cake, position: Int) = with(itemView) {
             kegIndex = position
             cake_text.text = item.title
+
+            Picasso.get()
+                .load(item.image)
+                .error(R.mipmap.ic_launcher)
+                .into(cake_image)
+
             setOnClickListener { callback(kegIndex) }
         }
     }
